@@ -30,7 +30,9 @@ public class Main {
                         }
                         throw new Exception("negatives not allowed: " + nigga);
                     }
-                    result += Integer.parseInt(numbersLine[i]);
+                    if (Integer.parseInt(numbersLine[i]) <= 1000){
+                        result += Integer.parseInt(numbersLine[i]);
+                    }
                 }
             } else{
                 String [] numbersLine = num.split(",|\\\\n");
@@ -44,7 +46,9 @@ public class Main {
                         }
                         throw new Exception("negatives not allowed: " + nigga.toString());
                     }
-                    result += Integer.parseInt(numbersLine[i]);
+                    if (Integer.parseInt(numbersLine[i]) <= 1000){
+                        result += Integer.parseInt(numbersLine[i]);
+                    }
                 }
             }
 
