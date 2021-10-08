@@ -14,6 +14,8 @@ public class Main {
                     (Objects.equals(del.charAt(i), '$')) ||
                     (Objects.equals(del.charAt(i), '|')) ||
                     (Objects.equals(del.charAt(i), '\\')) ||
+                    (Objects.equals(del.charAt(i), ')')) ||
+                    (Objects.equals(del.charAt(i), '(')) ||
                     (Objects.equals(del.charAt(i), '&'))) {
                 del = new StringBuilder(del).insert(i, "\\").toString();
                 i++;
@@ -30,21 +32,28 @@ public class Main {
             if (num.toCharArray()[0] == '/' && num.toCharArray()[1] == '/'){
                 StringBuffer sb = new StringBuffer();
                 StringBuffer newline = new StringBuffer();
+                String delimeter = "";
                 if (num.toCharArray()[2] != '['){
                     for (int i = 2; i < num.split("\\\\n")[0].length(); i++){
                         sb.append(num.split("\\\\n")[0].toCharArray()[i]);
                     }
                 } else{
-                    for (int i = 3; i < num.split("\\\\n")[0].length() - 1; i++){
-                        sb.append(num.split("\\\\n")[0].toCharArray()[i]);
+                    String [] delimeters = num.split("\\\\n")[0].split("\\[|\\]");
+                    for (int i = 1; i < delimeters.length; i++){
+                        if (Objects.equals(delimeters[i], "")) continue;
+                        else{
+                            delimeters[i] = Metacharacters(delimeters[i]);
+                            if (i == 1) delimeter += delimeters[i];
+                            else delimeter += "|" + delimeters[i];
+                        }
                     }
+                    System.out.println(delimeter);
                 }
 
                 for (int i = num.split("\\\\n")[0].length() + 2; i < num.length(); i++){
                     newline.append(num.toCharArray()[i]);
                 }
                 String Line = newline.toString();
-                String delimeter = Metacharacters(sb.toString());
                 String [] numbersLine = Line.split(delimeter + "|,|\\\\n");
 
                 for (int i = 0; i < numbersLine.length; i++){
