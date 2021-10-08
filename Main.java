@@ -7,11 +7,29 @@ public class Main {
         if (num.length() == 0){
             return 0;
         } else{
-            String [] numbersLine = num.split(",|\\\\n");
-            System.out.println(numbersLine[0] + " " + numbersLine[1] + " " + numbersLine[2]);
-            for (int i = 0; i < numbersLine.length; i++){
-                result += Integer.parseInt(numbersLine[i]);
+            if (num.toCharArray()[0] == '/' && num.toCharArray()[1] == '/'){
+                StringBuffer sb = new StringBuffer("");
+                StringBuffer newline = new StringBuffer("");
+                for (int i = 2; i < num.split("\\\\n")[0].length(); i++){
+                    sb.append(num.split("\\\\n")[0].toCharArray()[i]);
+                }
+                for (int i = num.split("\\\\n")[0].length() + 2; i < num.length(); i++){
+                    newline.append(num.toCharArray()[i]);
+                }
+                String Line = newline.toString();
+                String delimeter = sb.toString();
+                String [] numbersLine = Line.split(delimeter + "|,|\\\\n");
+
+                for (int i = 0; i < numbersLine.length; i++){
+                    result += Integer.parseInt(numbersLine[i]);
+                }
+            } else{
+                String [] numbersLine = num.split(",|\\\\n");
+                for (int i = 0; i < numbersLine.length; i++){
+                    result += Integer.parseInt(numbersLine[i]);
+                }
             }
+
             return result;
         }
     }
@@ -21,7 +39,7 @@ public class Main {
         System.out.println("Введіть рядок: ");
         String num = in.nextLine();
         in.close();
-        System.out.println(Add(num));
+        System.out.println("result: " + Add(num));
 
     }
 }
